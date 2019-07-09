@@ -6,6 +6,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name='django-helpdeskeddy',
     version='0.0.1',
+    packages=['dj_hde'],
     author='devxplorer',
     author_email='devxplorer@gmail.com',
     description='Django HelpDeskEddy Helper',
