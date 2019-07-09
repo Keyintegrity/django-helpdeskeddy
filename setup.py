@@ -1,16 +1,19 @@
-import setuptools
+import os
 
-with open("README.md", "r") as fh:
-    long_description = fh.read()
+from setuptools import find_packages, setup
 
-setuptools.setup(
+with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
+    README = readme.read()
+
+setup(
     name='django-helpdeskeddy',
     version='0.0.1',
-    packages=['dj_hde'],
+    packages=find_packages(),
+    include_package_data=True,
     author='devxplorer',
     author_email='devxplorer@gmail.com',
     description='Django HelpDeskEddy Helper',
-    long_description=long_description,
+    long_description=README,
     install_requires=[
         "helpdeskeddy_api_client==0.0.1",
         "Django>=1.11.22",
