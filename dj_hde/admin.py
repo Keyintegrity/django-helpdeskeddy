@@ -10,4 +10,4 @@ class TicketAdmin(admin.ModelAdmin):
 
 @admin.register(APICredentials)
 class APICredentialsAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('domain', 'email', 'is_active')

@@ -1,13 +1,17 @@
 from hde_api_client import HelpDeskEddyClient
 
 from dj_hde.models import APICredentials
+from .exceptions import NoActiveCredentials, MultipleActiveCredentials
 
 
 class DjHelpDeskEddyClient(HelpDeskEddyClient):
     def __init__(self):
-        api_credentials = APICredentials.objects.filter(is_active=True).last()
-
-        assert api_credentials is not None, 'No active credentials'
+        try:
+            api_credentials = APICredentials.objects.get(is_active=True)
+        except APICredentials.DoesNotExist:
+            raise NoActiveCredentials
+        except APICredentials.MultipleObjectsReturned:
+            raise MultipleActiveCredentials
 
         super(DjHelpDeskEddyClient, self).__init__(
             domain=api_credentials.domain,
