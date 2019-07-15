@@ -3,15 +3,21 @@ from django.db import models
 from django_mysql.models import JSONField
 
 
-class APICredentials(models.Model):
+class Config(models.Model):
     domain = models.CharField(max_length=128, verbose_name='Домен')
     email = models.EmailField(verbose_name='Эл. почта')
     api_key = models.CharField(max_length=256, verbose_name='API ключ')
+    department_id = models.PositiveSmallIntegerField(
+        verbose_name='id департамента',
+        help_text='Для добавленяи в запросы создания заявок, пользователя и т.д.',
+        null=True,
+        blank=True
+    )
     is_active = models.BooleanField(default=False, verbose_name='Активны')
 
     class Meta:
-        verbose_name = 'Учетные данные'
-        verbose_name_plural = 'Учетные данные'
+        verbose_name = 'Настройки'
+        verbose_name_plural = 'Настройки'
 
 
 class Ticket(models.Model):
