@@ -16,9 +16,9 @@ setup(
     long_description=README,
     install_requires=[
         "helpdeskeddy-api-client @ https://github.com/Keyintegrity/helpdeskeddy-api-client/archive/v0.0.2.zip#egg=helpdeskeddy-api-client-0.0.2",
-        "Django>=1.11.22",
-        "mysqlclient>=1.3.13",
-        "django-mysql>=3.2.0",
+        "Django>=1.11.22,<3.0",
+        "mysqlclient>=1.3.13,<2.0",
+        "django-mysql>=3.2.0,<4.0",
     ],
     classifiers=[
         'Framework :: Django',
