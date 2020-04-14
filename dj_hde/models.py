@@ -23,7 +23,13 @@ class Config(models.Model):
 class Ticket(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время создания')
     data = JSONField(max_length=256, verbose_name='Данные заявки')
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='Пользователь', null=True, blank=True)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        verbose_name='Пользователь',
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         verbose_name = 'Заявка'
