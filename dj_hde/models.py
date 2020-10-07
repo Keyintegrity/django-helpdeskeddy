@@ -1,36 +1,54 @@
 from django.conf import settings
 from django.db import models
 from django_mysql.models import JSONField
+from django.contrib.sites.models import Site
+from django.utils.translation import gettext_lazy as _
 
 
-class Config(models.Model):
-    domain = models.CharField(max_length=128, verbose_name='Домен')
-    email = models.EmailField(verbose_name='Эл. почта')
-    api_key = models.CharField(max_length=256, verbose_name='API ключ')
+class Department(models.Model):
+    name = models.CharField(_('Наименование'), max_length=128)
     department_id = models.PositiveSmallIntegerField(
-        verbose_name='id департамента',
-        help_text='Для добавленяи в запросы создания заявок, пользователя и т.д.',
+        verbose_name=_('id департамента'),
+        help_text=_('Для добавленяи в запросы создания заявок, пользователя и т.д.'),
         null=True,
         blank=True
     )
-    is_active = models.BooleanField(default=False, verbose_name='Активны')
 
     class Meta:
-        verbose_name = 'Настройки'
-        verbose_name_plural = 'Настройки'
+        verbose_name = _('Департамент')
+        verbose_name_plural = _('Департаменты')
+
+    def __str__(self):
+        return self.name
+
+    def natural_key(self):
+        return (self.name,)
+
+
+class Config(models.Model):
+    domain = models.CharField(max_length=128, verbose_name=_('Домен'))
+    email = models.EmailField(verbose_name=_('Эл. почта'))
+    api_key = models.CharField(max_length=256, verbose_name=_('API ключ'))
+    departments = models.ManyToManyField(Department, verbose_name=_('Департаменты'))
+    is_active = models.BooleanField(default=False, verbose_name=_('Активны'))
+    site_id = models.ForeignKey(Site, default=1, on_delete=models.CASCADE, verbose_name=_('ID Сайта'))
+
+    class Meta:
+        verbose_name = _('Настройки')
+        verbose_name_plural = _('Настройки')
 
 
 class Ticket(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата и время создания')
-    data = JSONField(max_length=256, verbose_name='Данные заявки')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата и время создания'))
+    data = JSONField(max_length=256, verbose_name=_('Данные заявки'))
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        verbose_name='Пользователь',
+        verbose_name=_('Пользователь'),
         null=True,
         blank=True,
     )
 
     class Meta:
-        verbose_name = 'Заявка'
-        verbose_name_plural = 'Заявки'
+        verbose_name = _('Заявка')
+        verbose_name_plural = _('Заявки')
