@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django_mysql.models import JSONField
 from django.contrib.sites.models import Site
+from django.contrib.sites.managers import CurrentSiteManager
 from django.utils.translation import gettext_lazy as _
 
 
@@ -31,7 +32,10 @@ class Config(models.Model):
     api_key = models.CharField(max_length=256, verbose_name=_('API ключ'))
     departments = models.ManyToManyField(Department, verbose_name=_('Департаменты'))
     is_active = models.BooleanField(default=False, verbose_name=_('Активны'))
-    site_id = models.ForeignKey(Site, default=1, on_delete=models.CASCADE, verbose_name=_('ID Сайта'))
+    site = models.ForeignKey(Site, default=1, on_delete=models.CASCADE, verbose_name=_('ID Сайта'))
+
+    objects = models.Manager()
+    on_site = CurrentSiteManager()
 
     class Meta:
         verbose_name = _('Настройки')

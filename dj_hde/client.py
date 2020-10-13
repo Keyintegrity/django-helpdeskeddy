@@ -7,7 +7,7 @@ from .exceptions import NoActiveCredentials, MultipleActiveCredentials
 class DjHelpDeskEddyClient(HelpDeskEddyClient):
     def __init__(self):
         try:
-            self.config = Config.objects.get(is_active=True)
+            self.config = Config.on_site.get(is_active=True)
         except Config.DoesNotExist:
             raise NoActiveCredentials
         except Config.MultipleObjectsReturned:
