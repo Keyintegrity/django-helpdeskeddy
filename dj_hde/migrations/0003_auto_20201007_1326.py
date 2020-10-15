@@ -2,6 +2,19 @@
 from django.db import migrations, models
 
 
+def forward(apps, schema_editor):
+    Config = apps.get_model('dj_hde', 'Config')
+    Department = apps.get_model('dj_hde', 'Department')
+
+    for config in Config.objects.all():
+        if config.department_id:
+            departament = Department.objects.create(
+                name='Department {}'.format(config.department_id),
+                department_id=config.department_id,
+            )
+            config.departments.add(departament)
+
+
 class Migration(migrations.Migration):
     dependencies = [
         ('dj_hde', '0002_auto_20190715_1301'),
@@ -25,14 +38,15 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Департаменты',
             },
         ),
-        migrations.RemoveField(
-            model_name='config',
-            name='department_id',
-        ),
         migrations.AddField(
             model_name='config',
             name='departments',
             field=models.ManyToManyField('Department', verbose_name='Департаменты'),
+        ),
+        migrations.RunPython(forward, migrations.RunPython.noop),
+        migrations.RemoveField(
+            model_name='config',
+            name='department_id',
         ),
         migrations.AddField(
             model_name='config',
