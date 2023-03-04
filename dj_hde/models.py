@@ -1,16 +1,16 @@
 from django.conf import settings
-from django.db import models
-from django_mysql.models import JSONField
-from django.contrib.sites.models import Site
 from django.contrib.sites.managers import CurrentSiteManager
+from django.contrib.sites.models import Site
+from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django_jsonfield_backport.models import JSONField
 
 
 class Department(models.Model):
     name = models.CharField(_('Наименование'), max_length=128)
     department_id = models.PositiveSmallIntegerField(
         verbose_name=_('id департамента'),
-        help_text=_('Для добавленяи в запросы создания заявок, пользователя и т.д.'),
+        help_text=_('Для добавления в запросы создания заявок, пользователя и т.д.'),
         null=True,
         blank=True
     )
@@ -44,7 +44,7 @@ class Config(models.Model):
 
 class Ticket(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата и время создания'))
-    data = JSONField(max_length=256, verbose_name=_('Данные заявки'))
+    data = JSONField(max_length=256, default=dict, verbose_name=_('Данные заявки'))
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,

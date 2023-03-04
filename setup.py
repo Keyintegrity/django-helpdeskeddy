@@ -15,10 +15,10 @@ setup(
     description='Django HelpDeskEddy Helper',
     long_description=README,
     install_requires=[
-        "helpdeskeddy-api-client @ https://github.com/Keyintegrity/helpdeskeddy-api-client/archive/v0.0.2.zip#egg=helpdeskeddy-api-client-0.0.2",
-        "Django>=1.11.22,<3.0",
-        "mysqlclient>=1.3.13,<2.0.4",
-        "django-mysql>=3.2.0,<4.0",
+        'Django>=2.2,<4.0',
+        'django-jsonfield-backport>=1.0.5,<2.0',
+        'helpdeskeddy-api-client @ git+https://github.com/Keyintegrity/helpdeskeddy-api-client.git@v0.0.2',
+        'mysqlclient>=2.0.0,<3.0',
     ],
     classifiers=[
         'Framework :: Django',
@@ -26,10 +26,11 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
     ],
 )
