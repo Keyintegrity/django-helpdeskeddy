@@ -3,7 +3,6 @@ from django.contrib.sites.managers import CurrentSiteManager
 from django.contrib.sites.models import Site
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django_jsonfield_backport.models import JSONField
 
 
 class Department(models.Model):
@@ -44,7 +43,7 @@ class Config(models.Model):
 
 class Ticket(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Дата и время создания'))
-    data = JSONField(max_length=256, default=dict, verbose_name=_('Данные заявки'))
+    data = models.JSONField(max_length=256, default=dict, verbose_name=_('Данные заявки'))
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
