@@ -34,8 +34,8 @@ class Migration(migrations.Migration):
                 )),
             ],
             options={
-                'verbose_name_plural': 'Департамент',
-                'verbose_name': 'Департаменты',
+                'verbose_name': 'Департамент',
+                'verbose_name_plural': 'Департаменты',
             },
         ),
         migrations.AddField(
